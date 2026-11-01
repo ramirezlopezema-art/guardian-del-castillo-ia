@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#171429">
+    <meta name="description" content="Un juego educativo para descubrir cómo un léxico sencillo puede detectar el tono de un mensaje.">
+    <title>El Guardián del Castillo | Taller de IA</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="cerebro.js" defer></script>
+    <script src="juego.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#inicio" aria-label="El Guardián del Castillo, inicio">
+          <span class="wordmark-icon" aria-hidden="true">✦</span>
+          <span>TALLER DE IA <span class="wordmark-divider">/</span> 01</span>
+        </a>
+        <span class="offline-badge"><span aria-hidden="true"></span> JUEGO SIN CONEXIÓN</span>
+      </header>
+
+      <section class="intro" id="inicio" aria-labelledby="page-title">
+        <p class="eyebrow"><span aria-hidden="true">✧</span> UNA AVENTURA DE LENGUAJE</p>
+        <h1 id="page-title">El Guardián<br>del <span>Castillo</span></h1>
+        <p class="intro-copy">Una criatura ancestral protege la entrada. Descubre cómo un pequeño modelo de palabras interpreta lo que escribes y cambia su nivel de confianza.</p>
+      </section>
+
+      <section class="game-layout" aria-label="Juego y explicación">
+        <div class="game-column">
+          <section class="guardian-card" aria-labelledby="guardian-heading">
+            <div class="guardian-scene" aria-hidden="true">
+              <span class="scene-star star-one">✦</span>
+              <span class="scene-star star-two">✧</span>
+              <span class="scene-moon">☾</span>
+              <span class="dragon">🐉</span>
+              <span class="scene-ground"></span>
+            </div>
+            <div class="guardian-content">
+              <div class="guardian-title-row">
+                <div>
+                  <p class="eyebrow">ANTE LA PUERTA</p>
+                  <h2 id="guardian-heading">El guardián escucha</h2>
+                </div>
+                <span class="status-pill" id="game-status">A la espera</span>
+              </div>
+              <p class="guardian-description" id="guardian-description">Salúdalo con un mensaje. Las palabras que detecte cambiarán su confianza.</p>
+              <div class="trust-heading">
+                <span>Confianza del dragón</span>
+                <span class="trust-value" id="trust-value">30<span> / 100</span></span>
+              </div>
+              <div class="trust-track" id="trust-track" role="progressbar" aria-label="Confianza del dragón" aria-valuemin="0" aria-valuemax="100" aria-valuenow="30" aria-valuetext="30 de 100">
+                <span class="trust-fill" id="trust-fill"></span>
+              </div>
+              <div class="trust-labels" aria-hidden="true"><span>Desconfía</span><span>Confía</span></div>
+            </div>
+          </section>
+
+          <section class="chat-card" aria-labelledby="chat-heading">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">CONVERSACIÓN</p>
+                <h2 id="chat-heading">Tu encuentro</h2>
+              </div>
+              <span class="message-count" id="message-count">0 mensajes</span>
+            </div>
+            <ol class="chat-log" id="chat-log" aria-live="polite" aria-relevant="additions text" aria-label="Historial de conversación">
+              <li class="chat-message dragon-message">
+                <span class="message-avatar" aria-hidden="true">🐉</span>
+                <div class="message-body">
+                  <span class="message-author">Guardián</span>
+                  <p>Alto ahí, viajero. ¿Qué tienes que decir antes de entrar?</p>
+                </div>
+              </li>
+            </ol>
+            <form class="message-form" id="message-form">
+              <label class="sr-only" for="message-input">Escribe un mensaje para el guardián</label>
+              <div class="input-wrap">
+                <input id="message-input" name="message" type="text" maxlength="120" autocomplete="off" placeholder="Escribe tu mensaje..." aria-describedby="input-help character-count">
+                <span class="character-count" id="character-count">0/120</span>
+              </div>
+              <button class="send-button" id="send-button" type="submit"><span>Enviar</span><span aria-hidden="true">↗</span></button>
+            </form>
+            <p class="input-help" id="input-help">Hasta 120 caracteres. Pulsa Enter para enviar.</p>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+          </section>
+        </div>
+
+        <aside class="guide-column" aria-label="Guía de la aventura">
+          <section class="guide-card how-to-card" aria-labelledby="how-to-heading">
+            <div class="guide-icon" aria-hidden="true">⌘</div>
+            <p class="eyebrow">CÓMO JUGAR</p>
+            <h2 id="how-to-heading">Tres pasos<br>para cruzar</h2>
+            <ol class="steps-list">
+              <li><span>01</span><p>Escribe un mensaje para el dragón.</p></li>
+              <li><span>02</span><p>Observa qué palabras reconoce el modelo.</p></li>
+              <li><span>03</span><p>Gana su confianza para conseguir la llave.</p></li>
+            </ol>
+            <p class="tip"><span aria-hidden="true">✦</span> No hay una respuesta correcta: prueba distintas palabras y compara el resultado.</p>
+          </section>
+
+          <section class="guide-card model-card" aria-labelledby="model-heading">
+            <p class="eyebrow">DEBAJO DEL CAPÓ</p>
+            <h2 id="model-heading">Un modelo sencillo</h2>
+            <p>Este juego no entiende el lenguaje como una persona. Busca palabras en dos listas y suma una puntuación:</p>
+            <div class="legend-row"><span class="legend-dot positive"></span><span>Palabra amable</span><span class="legend-score">+1</span></div>
+            <div class="legend-row"><span class="legend-dot negative"></span><span>Palabra hostil</span><span class="legend-score">−1</span></div>
+            <div class="legend-row"><span class="legend-dot neutral"></span><span>Sin coincidencias</span><span class="legend-score">0</span></div>
+            <p class="model-note">La puntuación mueve la confianza. Un mensaje sin coincidencias baja 2 puntos. Es un ejemplo educativo, no una IA que comprende intenciones.</p>
+            <details class="vocabulary">
+              <summary>Ver palabras de ejemplo</summary>
+              <p><strong>Amables:</strong> amable, gracias, amigo, ayudar, paz, genial.</p>
+              <p><strong>Hostiles:</strong> odio, miedo, atacar, destruir, enemigo, peligro.</p>
+              <p>Puedes ampliar las listas en <code>cerebro.js</code>.</p>
+            </details>
+          </section>
+        </aside>
+      </section>
+
+      <footer class="page-footer">
+        <span>UNA HISTORIA INTERACTIVA PARA APRENDER</span>
+        <span>HECHO PARA EXPLORAR · NO PARA EVALUAR</span>
+      </footer>
+    </main>
+    <div class="sr-only" id="announcer" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
